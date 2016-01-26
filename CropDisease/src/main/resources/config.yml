@@ -1,1 +1,24 @@
 # CropDisease Main Configuration
+Enabled: true
+#Disease types
+Sugarcane
+Enabled: true
+Case: 20
+Wheat
+Enabled: true
+Case: 5
+Pumpkin
+Enabled: true
+Case: 5
+Melon
+Enabled: true
+Case: 5
+Carrot
+Enabled: true
+Case: 2
+Potato
+Enabled: true
+Case: 2
+Netherwart
+Enabled: false
+Case: 5

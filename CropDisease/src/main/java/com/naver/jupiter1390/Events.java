@@ -19,7 +19,6 @@ public class Events implements Listener {
 	@EventHandler
 	public void onCropGrow(BlockGrowEvent event) {
 		
-		// config.yml 가져오기 
 		FileConfiguration config = plugin.getConfig();
 		
 		
