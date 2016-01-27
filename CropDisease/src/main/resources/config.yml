@@ -1,8 +1,21 @@
 # CropDisease Main Configuration
 Enabled: true
-#Disease types
+
+# Crop types
+# MATERIAL_DATA: alias
 Types:
-  SUGAR_CANE_BLOCK: 0.3
+  SUGAR_CANE_BLOCK: Sugarcane
+  CROP: Wheat
+  CROP_1: Pumpkin
+  CROP_2: Melon
+  CROP_3: Carrot
+  CROP_4: Potato
+  CROP_5: Netherwart
+
+# Crop disease chances
+# alias: chance (0 means 0% and 1 stands for 100%)
+Chance:
+  Sugarcane: 0.3
   Wheat: 0.2
   Pumpkin: 0.25
   Melon: 0.25
