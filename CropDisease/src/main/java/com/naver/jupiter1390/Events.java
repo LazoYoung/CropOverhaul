@@ -27,24 +27,46 @@ public class Events implements Listener {
 		
 		FileConfiguration config = plugin.getConfig();
 		Block block = event.getBlock();
-		Material mat = block.getType();
+		Material mat = block.getType(); // 이벤트가 발생된 블럭의 아이템코드 (Material)
+		
+		// config의 Types 설정 섹션
 		ConfigurationSection cs = config.getConfigurationSection("Types");
+		
+		/* config의 Types. 아래의 모든 키값
+		 * 
+		 * 예시)
+		 * Types:
+		 *   A: 1
+		 *   B: 2
+		 *   C: 3
+		 *   
+		 *   여기서 Types 아래의 키값: A, B, C
+		 *   
+		 *   cs.getKeys(bool) 에서 bool은
+		 *   Types의 A, B, C 각각에 대입된 아래 깊숙한 값(1, 2, 3)까지도 다 구해올것인지
+		 *   말것인지에 대한 결정
+		 */
 		Set<String> types = cs.getKeys(false);
 		
+		// Types 아래의 모든 키값(A, B, C)을 for루프로 각각 t에 대입
 		for(String t : types) {
 			
+			/* 키값을 Material Enum값으로 변환
+			 * 여기서 Material Enum이란 Material은 마크상의
+			 * 모든 아이템이나 블럭의 아이템코드를 뜻함
+			 * 이게 Enum 이라는것으로 정의되어 있음
+			 */
 			Material type = Material.getMaterial(t);
 			
+			// 이벤트가 발생된 블럭의 재질이 config.yml에 정의되어있는
+			// 재질에 포함되어 있을떄
 			if(mat.equals(type)) {
-				
-				// Matched
 				
 				double c = config.getInt("Types." + t);
 				double c1 = Math.random();
 				
 				if(c1 > c) {
 					
-					// The chance
 					Location loc = block.getLocation();
 					
 					// DEBUG 디버그 메세지

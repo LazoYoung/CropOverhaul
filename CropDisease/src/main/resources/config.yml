@@ -2,10 +2,10 @@
 Enabled: true
 #Disease types
 Types:
-  SUGAR_CANE_BLOCK: 0.4
-  Wheat: 0.3
-  Pumpkin: 0.3
-  Melon: 0.3
+  SUGAR_CANE_BLOCK: 0.3
+  Wheat: 0.2
+  Pumpkin: 0.25
+  Melon: 0.25
   Carrot: 0.2
   Potato: 0.1
-  Netherwart: 0.1
+  Netherwart: 0
