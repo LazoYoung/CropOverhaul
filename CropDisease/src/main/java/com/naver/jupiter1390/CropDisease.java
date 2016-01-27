@@ -8,6 +8,7 @@ public class CropDisease extends JavaPlugin {
 	public void onEnable() {
 		
 		saveDefaultConfig();
+		getServer().getPluginManager().registerEvents(new Events(this), this);
 		
 	}
 	
