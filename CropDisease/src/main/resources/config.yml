@@ -5,12 +5,12 @@ Enabled: true
 # MATERIAL_DATA: alias
 Types:
   SUGAR_CANE_BLOCK: Sugarcane
-  CROP: Wheat
-  CROP_1: Pumpkin
-  CROP_2: Melon
-  CROP_3: Carrot
-  CROP_4: Potato
-  CROP_5: Netherwart
+  CROPS: Wheat
+  PUMPKIN_STEM: Pumpkin
+  MELON_STEM: Melon
+  CARROT: Carrot
+  POTATO: Potato
+  NETHER_STALK: Netherwart
 
 # Crop disease chances
 # alias: chance (0 means 0% and 1 stands for 100%)
