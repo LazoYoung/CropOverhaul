@@ -27,39 +27,56 @@ public class Events implements Listener {
 		
 		FileConfiguration config = plugin.getConfig();
 		Block block = event.getBlock();
-		Material mat = block.getType(); // ÀÌº¥Æ®°¡ ¹ß»ıµÈ ºí·°ÀÇ ¾ÆÀÌÅÛÄÚµå (Material)
+		Material mat = block.getType(); // ì´ë²¤íŠ¸ê°€ ë°œìƒëœ ë¸”ëŸ­ì˜ ì•„ì´í…œì½”ë“œ (Material)
 		
-		// configÀÇ Types ¼³Á¤ ¼½¼Ç
+		// configì˜ Types ì„¤ì • ì„¹ì…˜
 		ConfigurationSection cs = config.getConfigurationSection("Types");
 		
-		/* configÀÇ Types. ¾Æ·¡ÀÇ ¸ğµç Å°°ª
+		/* configì˜ Types. ì•„ë˜ì˜ ëª¨ë“  í‚¤ê°’
 		 * 
-		 * ¿¹½Ã)
+		 * ì˜ˆì‹œ)
 		 * Types:
 		 *   A: 1
 		 *   B: 2
 		 *   C: 3
 		 *   
-		 *   ¿©±â¼­ Types ¾Æ·¡ÀÇ Å°°ª: A, B, C
+		 *   ì—¬ê¸°ì„œ Types ì•„ë˜ì˜ í‚¤ê°’: A, B, C
 		 *   
-		 *   cs.getKeys(bool) ¿¡¼­ boolÀº
-		 *   TypesÀÇ A, B, C °¢°¢¿¡ ´ëÀÔµÈ ¾Æ·¡ ±í¼÷ÇÑ °ª(1, 2, 3)±îÁöµµ ´Ù ±¸ÇØ¿Ã°ÍÀÎÁö
-		 *   ¸»°ÍÀÎÁö¿¡ ´ëÇÑ °áÁ¤
+		 *   cs.getKeys(bool) ì—ì„œ boolì€
+		 *   Typesì˜ A, B, C ê°ê°ì— ëŒ€ì…ëœ ì•„ë˜ ê¹Šìˆ™í•œ ê°’(1, 2, 3)ê¹Œì§€ë„ ë‹¤ êµ¬í•´ì˜¬ê²ƒì¸ì§€
+		 *   ë§ê²ƒì¸ì§€ì— ëŒ€í•œ ê²°ì •
 		 */
 		Set<String> types = cs.getKeys(false);
 		
-		// Types ¾Æ·¡ÀÇ ¸ğµç Å°°ª(A, B, C)À» for·çÇÁ·Î °¢°¢ t¿¡ ´ëÀÔ
+		// Types ì•„ë˜ì˜ ëª¨ë“  í‚¤ê°’(A, B, C)ì„ forë£¨í”„ë¡œ ê°ê° tì— ëŒ€ì…
 		for(String t : types) {
 			
-			/* Å°°ªÀ» Material Enum°ªÀ¸·Î º¯È¯
-			 * ¿©±â¼­ Material EnumÀÌ¶õ MaterialÀº ¸¶Å©»óÀÇ
-			 * ¸ğµç ¾ÆÀÌÅÛÀÌ³ª ºí·°ÀÇ ¾ÆÀÌÅÛÄÚµå¸¦ ¶æÇÔ
-			 * ÀÌ°Ô Enum ÀÌ¶ó´Â°ÍÀ¸·Î Á¤ÀÇµÇ¾î ÀÖÀ½
+			/* í‚¤ê°’ì„ Material Enumê°’ìœ¼ë¡œ ë³€í™˜
+			 * ì—¬ê¸°ì„œ Material Enumì´ë€ Materialì€ ë§ˆí¬ìƒì˜
+			 * ëª¨ë“  ì•„ì´í…œì´ë‚˜ ë¸”ëŸ­ì˜ ì•„ì´í…œì½”ë“œë¥¼ ëœ»í•¨
+			 * ì´ê²Œ Enum ì´ë¼ëŠ”ê²ƒìœ¼ë¡œ ì •ì˜ë˜ì–´ ìˆìŒ
+			 * ìì„¸í•œê±´ Material ì„ ì§ì ‘ í™•ì¸í•´ë³´ê¸°
+			 * 
+			 * ì—¬ê¸°ì„œ ê°ê°ì˜ ì •ì˜ëœ ê¸€ì´ Materialë“¤ì„.
+			 * (ìì„¸í•œê±´ Java Enum ê³µë¶€)
+			 * ã…‡ã…‹ ì•Œê² ìŒ
+			 * ê·¼ë° ê·¸ double c1ì˜ ê°’ ë²”ìœ„ê°€ ë­ì„
 			 */
 			Material type = Material.getMaterial(t);
 			
-			// ÀÌº¥Æ®°¡ ¹ß»ıµÈ ºí·°ÀÇ ÀçÁúÀÌ config.yml¿¡ Á¤ÀÇµÇ¾îÀÖ´Â
-			// ÀçÁú¿¡ Æ÷ÇÔµÇ¾î ÀÖÀ»‹š
+			// ì´ë²¤íŠ¸ê°€ ë°œìƒëœ ë¸”ëŸ­ì˜ ì¬ì§ˆì´ config.ymlì— ì •ì˜ë˜ì–´ìˆëŠ”
+			// ì¬ì§ˆì— í¬í•¨ë˜ì–´ ìˆì„ë–„
+			//ì•„ ê·¸ëŸ°ê±°êµ°ìš” ê·¼ë° ê·¸ëƒ¥ Sugaecaneìœ¼ë¡œ ì—°ê²°ì‹œí‚¤ë ¤ë©´ ì–´ë–»ê²Œ ì½”ë“œ ì§œì•¼ë˜ë‚˜ìš”
+			//ì´ë ‡ê²Œìš”? -> matì´ sugar_cane_blocksì¼ì‹œ sugarcaneìœ¼ë¡œ ì—°ê²°ì‹œí‚¨ë‹¤
+			/*
+			 * êµ¬ì§€ ê·¸ë˜ì•¼í•˜ëŠ” ì´ìœ ëŠ” ëª¨ë¥´ê² ì§€ë§Œ ê·¸ëŸ¬ë©´ ê°ê°ì˜ ì¬ì§ˆë“¤ì„
+			 * ë”°ë¡œ ì´ë¦„(alias)ë¡œ í”ŒëŸ¬ê·¸ì¸ì— ì €ì¥ì‹œì¼œì•¼ë˜ìš”.
+			 * ì´ë ‡ê²Œ í•˜ëŠ” ì´ìœ ê°€ ì‚¬íƒ•ìˆ˜ìˆ˜ëŠ” ê´œì°®ì€ë°
+			 * ê·¸ ë°€ì´ë‚˜ í˜¸ë°•ê°™ì€ê²½ìš°  CROPS í•˜ë‚˜ë¡œ í†µì¼ë˜ê³  ì½”ë“œë§Œ ë‹¬ë¼ì„œ
+			 * ë‚˜ì¤‘ì— ì¡°ì‘í•˜ê¸°ê°€ í˜ë“¤ì–´ì ¸ìš” ì•„ ìœ ì €ë“¤ì´ ì‰½ê²Œ ì•Œì•„ë³´ê²Œã…‡ã…‡ ì €ë„ ì•Œì•„ë´ì•¼ë˜ê³ 
+			 * ê·¸ëŸ¼ í•´ë“œë¦¬ì£ . ì˜ˆì‹œë¥¼ ì ì–´ì¤„ê²Œìš” ì¼ë‹¨ ì—¬ê¸°ì„œë§ê³  ì œ ì»´í„°ë¡œ í• í…Œë‹ˆ
+			 * ì•„ê¹Œ ë°°ì› ë˜ í’€ í•˜ì„¸ìš”.
+			 */
 			if(mat.equals(type)) {
 				
 				double c = config.getInt("Types." + t);
@@ -69,18 +86,18 @@ public class Events implements Listener {
 					
 					Location loc = block.getLocation();
 					
-					// DEBUG µğ¹ö±× ¸Ş¼¼Áö
+					// DEBUG ë””ë²„ê·¸ ë©”ì„¸ì§€
 					plugin.getLogger().info("CropGrowEvent on world " + loc.getWorld()
 							+ ", X" + loc.getBlockX() + ", Y" + loc.getBlockY()+", Z" + loc.getBlockZ());
 					
-					// ¾Æ·¡ºí·° °¨Áö ·çÇÁ (¸ñÇ¥À§Ä¡ ¾Æ·¡ºí·°ºÎÅÍ ±× 3ºí·° ¾Æ·¡±îÁö)
+					// ì•„ë˜ë¸”ëŸ­ ê°ì§€ ë£¨í”„ (ëª©í‘œìœ„ì¹˜ ì•„ë˜ë¸”ëŸ­ë¶€í„° ê·¸ 3ë¸”ëŸ­ ì•„ë˜ê¹Œì§€)
 					for(int i=1;i<4;i++) {
 						
 						Block b = loc.getWorld().getBlockAt(loc.add(0, -i, 0));
 						
 						if(!b.getType().equals(type)) {
 							
-							// °¡Àå ¹ØµÕÀÇ »çÅÁ¼ö¼ö¸¦ º¯°æ
+							// ê°€ì¥ ë°‘ë‘¥ì˜ ì‚¬íƒ•ìˆ˜ìˆ˜ë¥¼ ë³€ê²½
 							loc.add(0, 1, 0).getBlock().setType(Material.DEAD_BUSH);
 							break;
 							
