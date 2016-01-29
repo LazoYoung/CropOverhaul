@@ -1,8 +1,10 @@
 # CropDisease Main Configuration
-Enabled: true
+Enable: true
+Debug: true
+PlaceSandUnderDeadbush: true
 
 # Crop types
-# MATERIAL_DATA: alias
+# <MATERIAL>: <alias>
 Types:
   SUGAR_CANE_BLOCK: Sugarcane
   CROPS: Wheat
@@ -13,12 +15,13 @@ Types:
   NETHER_STALK: Netherwart
 
 # Crop disease chances
-# alias: chance (0 means 0% and 1 stands for 100%)
-Chance:
-  Sugarcane: 0.3
-  Wheat: 0.2
-  Pumpkin: 0.25
-  Melon: 0.25
-  Carrot: 0.2
-  Potato: 0.1
-  Netherwart: 0
+# Chance 0 means 0% and 1 stands for 100%
+# <alias>: <chance> [result MATERIAL]
+Infect:
+  Sugarcane: 0.2 DEAD_BUSH
+  Wheat: 0.05
+  Pumpkin: 0.06 DEAD_BUSH
+  Melon: 0.06 DEAD_BUSH
+  Carrot: 0.04
+  Potato: 0.06
+  Netherwart: 0.15

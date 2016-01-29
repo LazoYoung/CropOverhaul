@@ -11,25 +11,38 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockGrowEvent;
-import org.bukkit.plugin.Plugin;
 
 public class Events implements Listener {
 	
-	private Plugin plugin;
+	private CropDisease plugin;
 	
-	public Events(Plugin plugin) {
+	public Events(CropDisease plugin) {
 		
 		this.plugin = plugin;
 		
 	}
 	
 	@EventHandler
-	public void onCropGrow(BlockGrowEvent event) {
+	public void onBlockGrow(BlockGrowEvent event) {
+		
+		final Location loc = event.getBlock().getLocation();
+		
+		Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+			@Override
+			public void run() {
+				cropGrow(loc.getBlock());
+			}
+		});
+		
+	}
+	
+	private void cropGrow(Block block) {
 		
 		FileConfiguration config = plugin.getConfig();
-		Block block = event.getBlock();
 		Material mat = block.getType(); // 이벤트가 발생된 블럭의 아이템코드 (Material)
 		ConfigurationSection cs = config.getConfigurationSection("Types");
+		
+		plugin.logDebug(mat.toString() + " has grown!");
 		
 		// config의 작물 종류 얻어오기
 		Set<String> types = cs.getKeys(false);
@@ -50,10 +63,19 @@ public class Events implements Listener {
 				
 				// 해당 작물에 정의된 이름
 				String alias = config.getString("Types." + t);
-				double c = config.getDouble("Chance." + alias); // 해당 작물의 질병확률
-				double c1 = Math.random();
+				String infect = config.getString("Infect." + alias);
+				Material result = Material.AIR;
+				double chance = 0;
+				double c = Math.random();
 				
-				if(c > c1) {
+				if(infect.contains(" ")) {
+					chance = Double.valueOf(infect.split(" ") [0]);
+					result = Material.getMaterial(infect.split(" ") [1]);
+				} else {
+					chance = Double.valueOf(infect);
+				}
+				
+				if(chance > c) {
 					
 					Location loc = block.getLocation();
 					
@@ -61,27 +83,29 @@ public class Events implements Listener {
 					for(int i=1;i<4;i++) {
 						
 						// y축 i블럭 아래에 있는 블럭
-						Block b = loc.getWorld().getBlockAt(loc.add(0, -i, 0));
+						Block b = loc.getWorld().getBlockAt(loc.subtract(0, 1, 0));
 						
 						// b 블럭이 작물블럭이면 조건문 안이 실행됨
 						if(!b.getType().equals(type)) {
 							
-							// 바닥이 경작된 흙이라면 일반 흙으로 변경
 							Block floor = loc.getBlock();
-							final Block bottom = loc.clone().add(0, 1, 0).getBlock();
+							final Block btm = loc.clone().add(0, 1, 0).getBlock();
+							btm.setType(result);
 							
-							bottom.setType(Material.AIR);
-							
-							if(floor.getType().equals(Material.SOIL)) {
-								floor.setType(Material.DIRT);
+							if(result.equals(Material.DEAD_BUSH)
+									&& config.getBoolean("PlaceSandUnderDeadbush")) {
+								floor.setType(Material.SAND);
 							}
+							
+							plugin.logDebug("Crop " + alias + " has been infected on " + btm.getWorld().getName()
+									+ ", X: " + btm.getX() + ", Y: " + btm.getY() + ", Z: " + btm.getZ());
 							
 							// 서버의 메인 쓰레드에서 한 tick 쉬었다가 아래문을 실행 (Synchronized Task)
 							Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
 								@Override
 								public void run() {
 									// 가장 밑둥의 작물을 변경
-									bottom.setType(Material.DEAD_BUSH);
+									btm.setType(Material.DEAD_BUSH);
 								}
 							});
 							break;
