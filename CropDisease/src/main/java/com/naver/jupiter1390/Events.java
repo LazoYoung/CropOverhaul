@@ -2,6 +2,7 @@ package com.naver.jupiter1390;
 
 import java.util.Set;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -49,16 +50,12 @@ public class Events implements Listener {
 				
 				// 해당 작물에 정의된 이름
 				String alias = config.getString("Types." + t);
-				double c = config.getInt("Chance." + alias); // 해당 작물의 질병확률
+				double c = config.getDouble("Chance." + alias); // 해당 작물의 질병확률
 				double c1 = Math.random();
 				
-				if(c1 > c) {
+				if(c > c1) {
 					
 					Location loc = block.getLocation();
-					
-					// DEBUG 디버그 메세지
-					plugin.getLogger().info("CropGrowEvent on world " + loc.getWorld()
-							+ ", X" + loc.getBlockX() + ", Y" + loc.getBlockY()+", Z" + loc.getBlockZ());
 					
 					// 아래블럭 감지 루프 (목표위치 아래블럭부터 그 3블럭 아래까지)
 					for(int i=1;i<4;i++) {
@@ -69,8 +66,24 @@ public class Events implements Listener {
 						// b 블럭이 작물블럭이면 조건문 안이 실행됨
 						if(!b.getType().equals(type)) {
 							
-							// 가장 밑둥의 작물을 변경
-							loc.add(0, 1, 0).getBlock().setType(Material.DEAD_BUSH);
+							// 바닥이 경작된 흙이라면 일반 흙으로 변경
+							Block floor = loc.getBlock();
+							final Block bottom = loc.clone().add(0, 1, 0).getBlock();
+							
+							bottom.setType(Material.AIR);
+							
+							if(floor.getType().equals(Material.SOIL)) {
+								floor.setType(Material.DIRT);
+							}
+							
+							// 서버의 메인 쓰레드에서 한 tick 쉬었다가 아래문을 실행 (Synchronized Task)
+							Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+								@Override
+								public void run() {
+									// 가장 밑둥의 작물을 변경
+									bottom.setType(Material.DEAD_BUSH);
+								}
+							});
 							break;
 							
 						}
