@@ -8,7 +8,9 @@ PlaceSandUnderDeadbush: true
 Types:
   SUGAR_CANE_BLOCK: Sugarcane
   CROPS: Wheat
+  PUMPKIN: Pumpkin
   PUMPKIN_STEM: Pumpkin
+  MELON: Melon
   MELON_STEM: Melon
   CARROT: Carrot
   POTATO: Potato
@@ -18,10 +20,10 @@ Types:
 # Chance 0 means 0% and 1 stands for 100%
 # <alias>: <chance> [result MATERIAL]
 Infect:
-  Sugarcane: 0.2 DEAD_BUSH
-  Wheat: 0.05
-  Pumpkin: 0.06 DEAD_BUSH
-  Melon: 0.06 DEAD_BUSH
-  Carrot: 0.04
-  Potato: 0.06
+  Sugarcane: 0.2
+  Wheat: 0.12
+  Pumpkin: 0.14
+  Melon: 0.14
+  Carrot: 0.08
+  Potato: 0.05
   Netherwart: 0.15
