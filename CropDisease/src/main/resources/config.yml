@@ -20,10 +20,10 @@ Types:
 # Chance 0 means 0% and 1 stands for 100%
 # <alias>: <chance> [result MATERIAL]
 Infect:
-  Sugarcane: 0.2
+  Sugarcane: 0.2 DEAD_BUSH
   Wheat: 0.12
-  Pumpkin: 0.14
-  Melon: 0.14
+  Pumpkin: 0.14 DEAD_BUSH
+  Melon: 0.14 DEAD_BUSH
   Carrot: 0.08
   Potato: 0.05
   Netherwart: 0.15
