@@ -14,9 +14,11 @@ public class CropDisease extends JavaPlugin {
 	public void onEnable() {
 		
 		saveDefaultConfig();
+		getCommand("cropdisease").setExecutor(new Commands(this));
+		
+		events = new Events(this);
 		
 		if(getConfig().getBoolean("Enable")) {
-			events = new Events(this);
 			getServer().getPluginManager().registerEvents(events, this);
 		}
 		

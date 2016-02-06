@@ -18,18 +18,22 @@ public class Commands implements CommandExecutor {
 		
 		if(cmd.getName().equals("cropdisease")) {
 			
-			if(args.length < 0) {
+			if(args.length < 1) {
 				PluginDescriptionFile pdf = getDescription();
-				sender.sendMessage("CropDisease plugin v" + pdf.getVersion());
-				return true;
+				sender.sendMessage(new String[] {
+						"CropDisease plugin v" + pdf.getVersion() + "\n" +
+						"Coded and copyrighted by LazoCreations." + "\n" +
+						"Idea inspired by jupiter1390.\n "
+				});
+				return false;
 			}
 			
 			String arg = args[0].toLowerCase();
 			
 			if(arg.equals("help")) {
 				sender.sendMessage(new String[] {
-						"/cropdisease - Displays plugin info." +
-						"/cropdisease help - Lists commands." +
+						"/cropdisease - Displays plugin info.\n" +
+						"/cropdisease help - Lists commands.\n" +
 						"/cropdisease reload - Reloads config."
 				});
 				return true;
@@ -37,6 +41,7 @@ public class Commands implements CommandExecutor {
 			
 			if(arg.equals("reload")) {
 				plugin.reloadConfiguration();
+				sender.sendMessage("Configurations have been reloaded.");
 				return true;
 			}
 			
