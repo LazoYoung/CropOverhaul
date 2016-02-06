@@ -4,6 +4,7 @@
 	<artifactId>CropDisease</artifactId>
 	<version>1.0</version>
 	<name>CropDisease</name>
+	<description>A simple plugin that calls crop diseases in Minecraft</description>
 	
 	<properties>
 		<project.build.sourceEncoding>utf-8</project.build.sourceEncoding>
@@ -24,5 +25,4 @@
            <scope>provided</scope>
     </dependency>
 </dependencies>
-	<description>A simple plugin that calls crop diseases in Minecraft</description>
 </project>

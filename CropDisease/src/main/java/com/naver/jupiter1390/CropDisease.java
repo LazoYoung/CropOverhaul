@@ -8,6 +8,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class CropDisease extends JavaPlugin {
 	
 	private FileConfiguration config;
+	private Events events;
 	
 	@Override
 	public void onEnable() {
@@ -15,7 +16,8 @@ public class CropDisease extends JavaPlugin {
 		saveDefaultConfig();
 		
 		if(getConfig().getBoolean("Enable")) {
-			getServer().getPluginManager().registerEvents(new Events(this), this);
+			events = new Events(this);
+			getServer().getPluginManager().registerEvents(events, this);
 		}
 		
 	}
@@ -36,11 +38,14 @@ public class CropDisease extends JavaPlugin {
 	}
 
 	public void reloadConfiguration() {
-		this.config = getConfig();
+		
+		config = getConfig();
+		events.reloadConfig();
+		
 	}
 	
 	public FileConfiguration getConfiguration() {
-		return this.config;
+		return config;
 	}
 	
 }
