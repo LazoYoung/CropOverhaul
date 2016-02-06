@@ -1,6 +1,5 @@
 # CropDisease Main Configuration
 Enable: true
-Debug: true
 PlaceSandUnderDeadbush: true
 
 # Crop types
