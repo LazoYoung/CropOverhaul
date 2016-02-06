@@ -14,12 +14,10 @@ import org.bukkit.event.block.BlockGrowEvent;
 public class Events implements Listener {
 	
 	private CropDisease plugin;
-	private FileConfiguration config;
 	
 	public Events(CropDisease plugin) {
 		
 		this.plugin = plugin;
-		this.config = plugin.getConfig();
 		
 	}
 	
@@ -39,6 +37,7 @@ public class Events implements Listener {
 	
 	private void cropGrow(Block block) {
 		
+		FileConfiguration config = plugin.getConfiguration();
 		Material mat = block.getType();
 		Set<String> types = config.getConfigurationSection("Types").getKeys(false);
 		

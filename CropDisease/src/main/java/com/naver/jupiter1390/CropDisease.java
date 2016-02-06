@@ -2,9 +2,12 @@ package com.naver.jupiter1390;
 
 import java.util.logging.Logger;
 
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class CropDisease extends JavaPlugin {
+	
+	private FileConfiguration config;
 	
 	@Override
 	public void onEnable() {
@@ -30,6 +33,14 @@ public class CropDisease extends JavaPlugin {
 			
 		}
 		
+	}
+
+	public void reloadConfiguration() {
+		this.config = getConfig();
+	}
+	
+	public FileConfiguration getConfiguration() {
+		return this.config;
 	}
 	
 }
