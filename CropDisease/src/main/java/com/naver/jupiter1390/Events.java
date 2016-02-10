@@ -15,6 +15,7 @@ public class Events implements Listener {
 	
 	private CropDisease plugin;
 	private FileConfiguration config;
+	private Set<String> types;
 	
 	public Events(CropDisease plugin) {
 		
@@ -38,14 +39,14 @@ public class Events implements Listener {
 	
 	public void reloadConfig() {
 		
-		config = plugin.getConfiguration();
+		config = plugin.getConfig();
+		types = config.getConfigurationSection("Types").getKeys(false);
 		
 	}
 	
 	private void cropGrow(Block block) {
 		
 		Material mat = block.getType();
-		Set<String> types = config.getConfigurationSection("Types").getKeys(false);
 		
 		for(String t : types) {
 			
