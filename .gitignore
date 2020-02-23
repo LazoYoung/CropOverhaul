@@ -1,3 +1,11 @@
-/.idea
+# Gradle configuration
 /.gradle
+
+# Local artifact
 /build
+
+# IDEA configuration
+/.idea
+*.iml
+*.ipr
+*.iws
