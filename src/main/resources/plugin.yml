@@ -1,0 +1,16 @@
+name: ${name}
+version: ${version}
+description: ${desc}
+author: ${author}
+main: ${classpath}
+
+commands:
+  crop:
+    description: Displays CropDisease plugin's information.
+    aliases: [cpp, cropplusplus]
+    usage: 'Type \'/crop help\' to list available commands.'
+    
+permissions:
+  crop.reload:
+    description: Permits to reload configurations.
+    default: op

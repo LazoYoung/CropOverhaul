@@ -1,4 +1,4 @@
-package com.naver.jupiter1390;
+package com.naver.idealproduction;
 
 import java.util.Set;
 
@@ -11,16 +11,31 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockGrowEvent;
 
+/**
+ * This file is part of Crop++.
+ *
+ * Crop++ is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Crop++ is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Crop++. If not, see <https://www.gnu.org/licenses/>.
+ */
+
 public class Events implements Listener {
 	
-	private CropDisease plugin;
+	private Main plugin;
 	private FileConfiguration config;
 	private Set<String> types;
 	
-	public Events(CropDisease plugin) {
-		
+	public Events(Main plugin) {
 		this.plugin = plugin;
-		
 	}
 	
 	@EventHandler
@@ -28,12 +43,7 @@ public class Events implements Listener {
 		
 		final Location loc = event.getBlock().getLocation();
 		
-		Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-			@Override
-			public void run() {
-				cropGrow(loc.getBlock());
-			}
-		});
+		Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, () -> cropGrow(loc.getBlock()));
 		
 	}
 	
@@ -52,19 +62,19 @@ public class Events implements Listener {
 			
 			Material type = Material.getMaterial(t);
 			
-			if(type != null && mat.equals(type)) {
+			if(mat.equals(type)) {
 				
 				String alias = config.getString("Types." + t);
 				String infect = config.getString("Infect." + alias);
 				Material result = Material.AIR;
-				double chance = 0;
+				double chance;
 				double c = Math.random();
 				
 				if(infect.contains(" ")) {
-					chance = Double.valueOf(infect.split(" ") [0]);
+					chance = Double.parseDouble(infect.split(" ") [0]);
 					result = Material.getMaterial(infect.split(" ") [1]);
 				} else {
-					chance = Double.valueOf(infect);
+					chance = Double.parseDouble(infect);
 				}
 				
 				if(chance > c) {
